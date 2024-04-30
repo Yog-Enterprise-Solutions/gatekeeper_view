@@ -1,0 +1,213 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { FrappeApp } from "frappe-js-sdk";
+import "./App.css";
+
+function App() {
+  // Setting API
+  const frappe = new FrappeApp("http://194.31.55.40:14000");
+  const db = frappe.db();
+  const file = frappe.file();
+
+  // Fetch data for purchase order
+  const [countitem, setCountItem] = useState(0);
+  const [orderList, setOrderList] = useState([]);
+  useEffect(() => {
+    if (countitem === 0) {
+      db.getDocList("Purchase Order")
+        .then((doclist) => {
+          const list = doclist.map((doc) => doc.name);
+          setOrderList(list);
+        })
+        .catch((error) => console.error(error));
+    }
+    setCountItem(1);
+  }, [countitem, db]);
+
+  // Suggestions for purchase order
+  const [selectedOrder, setSelectedOrder] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSelectedOrder(value);
+    const suggestions = orderList.filter((order) =>
+      order.toLowerCase().includes(value.toLowerCase())
+    );
+    setSuggestions(suggestions);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setSelectedOrder(suggestion);
+    setSuggestions([]);
+    document.querySelector(".orderdetails").style.display = "block";
+  };
+
+  const showsuggestions = () => {
+    if (selectedOrder.trim() === "") {
+      setSuggestions(orderList);
+    } else {
+      const filteredSuggestions = orderList.filter((order) =>
+        order.toLowerCase().includes(selectedOrder.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+    }
+  };
+
+  // Get data for single order
+  const [countdetail, setcountdetail] = useState(0);
+  const [singleOrder, setsingleOrder] = useState({ items: [] });
+  useEffect(() => {
+    if (selectedOrder !== "") {
+      if (countdetail === 0) {
+        db.getDoc("Purchase Order", selectedOrder)
+          .then((doc) => {
+            setsingleOrder(doc);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      }
+      setcountdetail(1);
+    }
+  }, [db, selectedOrder]);
+
+  // Create table rows for items
+
+  const createTable = () => {
+    return singleOrder.items.map((row, index) => (
+      <tr key={index}>
+        <td id={row.name} style={{ display: "none" }}>
+          <h5 className="itemcode">{row.item_code}</h5>
+        </td>
+        <td id={row.item_name}>
+          <h5 className="itemname">{row.item_name}</h5>
+        </td>
+        <td id={row.item_code}>
+          <input
+            type="number"
+            min={1}
+            style={{ width: "50px" }}
+            className="num"
+          />
+        </td>
+        <td id={row.idx}>
+          <input
+            type="file"
+            placeholder="Choose"
+            className="img"
+            accept=".png, .jpg, .jpeg"
+            onChange={(e) => handleFileChange(e)}
+          />
+        </td>
+      </tr>
+    ));
+  };
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  // Function to handle file change
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+
+  // Function to handle form submission
+  const clickSubmit = () => {
+    const tableRows = document.querySelectorAll(".orderdetails table tbody tr");
+    const promises = []; // Array to store promises for each file upload
+    const rowData = [];
+
+    tableRows.forEach((row) => {
+      const itemCode = row.querySelector(".itemcode").textContent;
+      const quantity = parseFloat(row.querySelector(".num").value);
+      const imageFile = row.querySelector(".img").files[0];
+
+      if (imageFile) {
+        // Check if imageFile exists
+        const fileArgs = {
+          isPrivate: true,
+          folder: "Home",
+          file_url: "",
+          doctype: "User",
+          docname: "Administrator",
+          fieldname: "image",
+        };
+
+        // Push a promise returned by the file.uploadFile() call to the promises array
+        promises.push(
+          file
+            .uploadFile(imageFile, fileArgs, (completedBytes, totalBytes) =>
+              console.log(Math.round((completedBytes / totalBytes) * 100))
+            )
+            .then((result) => {
+              rowData.push({
+                item_code: itemCode,
+                quantity_received_by_gatekeeper: quantity,
+                image_file: result.data.message.file_url,
+              });
+            })
+            .catch((e) => console.error(e))
+        );
+      }
+    });
+
+    Promise.all(promises)
+      .then(() => {
+        let ge_doc = {
+          purchase_order: singleOrder.items[0].parent,
+          items: rowData,
+        };
+        console.log(ge_doc);
+        // db.createDoc("Gatekeeper View", ge_doc)
+        //   .then((doc) => console.log(doc))
+        //   .catch((error) => console.error(error));
+      })
+      .catch((error) => console.error("Error uploading files:", error));
+  };
+
+  return (
+    <div className="container">
+      <div className="logo">
+        <h1>Gatekeeper View</h1>
+      </div>
+      <div className="searchmenu">
+        <input
+          type="search"
+          placeholder="Search for your Orders"
+          className="purorder"
+          value={selectedOrder}
+          onChange={handleInputChange}
+          onFocus={showsuggestions}
+        />
+        {suggestions.length > 0 && (
+          <ul className="suggestions">
+            {suggestions.map((suggestion, index) => (
+              <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div className="orderdetails">
+        <div className="details">
+          <table>
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Quantity Received by Gatekeeper</th>
+                <th>Item Image</th>
+              </tr>
+            </thead>
+            <tbody>{createTable()}</tbody>
+          </table>
+        </div>
+        <button className="submit" onClick={clickSubmit}>
+          Submit
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default App;

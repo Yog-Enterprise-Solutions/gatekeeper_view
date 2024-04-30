@@ -1,5 +1,5 @@
-app_name = "housekeeper_view"
-app_title = "Housekeeper View"
+app_name = "gatekeeper_view"
+app_title = "Gatekeeper View"
 app_publisher = "yash"
 app_description = "its an new app"
 app_email = "yash@gmail.com"
@@ -10,15 +10,15 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/housekeeper_view/css/housekeeper_view.css"
-# app_include_js = "/assets/housekeeper_view/js/housekeeper_view.js"
+# app_include_css = "/assets/gatekeeper_view/css/gatekeeper_view.css"
+# app_include_js = "/assets/gatekeeper_view/js/gatekeeper_view.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/housekeeper_view/css/housekeeper_view.css"
-# web_include_js = "/assets/housekeeper_view/js/housekeeper_view.js"
+# web_include_css = "/assets/gatekeeper_view/css/gatekeeper_view.css"
+# web_include_js = "/assets/gatekeeper_view/js/gatekeeper_view.js"
 
 # include custom scss in every website theme (without file extension ".scss")
-# website_theme_scss = "housekeeper_view/public/scss/website"
+# website_theme_scss = "gatekeeper_view/public/scss/website"
 
 # include js, css files in header of web form
 # webform_include_js = {"doctype": "public/js/doctype.js"}
@@ -36,7 +36,7 @@ app_license = "mit"
 # Svg Icons
 # ------------------
 # include app icons in desk
-# app_include_icons = "housekeeper_view/public/icons.svg"
+# app_include_icons = "gatekeeper_view/public/icons.svg"
 
 # Home Pages
 # ----------
@@ -60,43 +60,43 @@ app_license = "mit"
 
 # add methods and filters to jinja environment
 # jinja = {
-# 	"methods": "housekeeper_view.utils.jinja_methods",
-# 	"filters": "housekeeper_view.utils.jinja_filters"
+# 	"methods": "gatekeeper_view.utils.jinja_methods",
+# 	"filters": "gatekeeper_view.utils.jinja_filters"
 # }
 
 # Installation
 # ------------
 
-# before_install = "housekeeper_view.install.before_install"
-# after_install = "housekeeper_view.install.after_install"
+# before_install = "gatekeeper_view.install.before_install"
+# after_install = "gatekeeper_view.install.after_install"
 
 # Uninstallation
 # ------------
 
-# before_uninstall = "housekeeper_view.uninstall.before_uninstall"
-# after_uninstall = "housekeeper_view.uninstall.after_uninstall"
+# before_uninstall = "gatekeeper_view.uninstall.before_uninstall"
+# after_uninstall = "gatekeeper_view.uninstall.after_uninstall"
 
 # Integration Setup
 # ------------------
 # To set up dependencies/integrations with other apps
 # Name of the app being installed is passed as an argument
 
-# before_app_install = "housekeeper_view.utils.before_app_install"
-# after_app_install = "housekeeper_view.utils.after_app_install"
+# before_app_install = "gatekeeper_view.utils.before_app_install"
+# after_app_install = "gatekeeper_view.utils.after_app_install"
 
 # Integration Cleanup
 # -------------------
 # To clean up dependencies/integrations with other apps
 # Name of the app being uninstalled is passed as an argument
 
-# before_app_uninstall = "housekeeper_view.utils.before_app_uninstall"
-# after_app_uninstall = "housekeeper_view.utils.after_app_uninstall"
+# before_app_uninstall = "gatekeeper_view.utils.before_app_uninstall"
+# after_app_uninstall = "gatekeeper_view.utils.after_app_uninstall"
 
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "housekeeper_view.notifications.get_notification_config"
+# notification_config = "gatekeeper_view.notifications.get_notification_config"
 
 # Permissions
 # -----------
@@ -135,39 +135,39 @@ app_license = "mit"
 
 # scheduler_events = {
 # 	"all": [
-# 		"housekeeper_view.tasks.all"
+# 		"gatekeeper_view.tasks.all"
 # 	],
 # 	"daily": [
-# 		"housekeeper_view.tasks.daily"
+# 		"gatekeeper_view.tasks.daily"
 # 	],
 # 	"hourly": [
-# 		"housekeeper_view.tasks.hourly"
+# 		"gatekeeper_view.tasks.hourly"
 # 	],
 # 	"weekly": [
-# 		"housekeeper_view.tasks.weekly"
+# 		"gatekeeper_view.tasks.weekly"
 # 	],
 # 	"monthly": [
-# 		"housekeeper_view.tasks.monthly"
+# 		"gatekeeper_view.tasks.monthly"
 # 	],
 # }
 
 # Testing
 # -------
 
-# before_tests = "housekeeper_view.install.before_tests"
+# before_tests = "gatekeeper_view.install.before_tests"
 
 # Overriding Methods
 # ------------------------------
 #
 # override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "housekeeper_view.event.get_events"
+# 	"frappe.desk.doctype.event.event.get_events": "gatekeeper_view.event.get_events"
 # }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-# 	"Task": "housekeeper_view.task.get_dashboard_data"
+# 	"Task": "gatekeeper_view.task.get_dashboard_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled
@@ -181,13 +181,13 @@ app_license = "mit"
 
 # Request Events
 # ----------------
-# before_request = ["housekeeper_view.utils.before_request"]
-# after_request = ["housekeeper_view.utils.after_request"]
+# before_request = ["gatekeeper_view.utils.before_request"]
+# after_request = ["gatekeeper_view.utils.after_request"]
 
 # Job Events
 # ----------
-# before_job = ["housekeeper_view.utils.before_job"]
-# after_job = ["housekeeper_view.utils.after_job"]
+# before_job = ["gatekeeper_view.utils.before_job"]
+# after_job = ["gatekeeper_view.utils.after_job"]
 
 # User Data Protection
 # --------------------
@@ -217,7 +217,7 @@ app_license = "mit"
 # --------------------------------
 
 # auth_hooks = [
-# 	"housekeeper_view.auth.validate"
+# 	"gatekeeper_view.auth.validate"
 # ]
 
 # Automatically update python controller files with type annotations for this app.
@@ -227,3 +227,5 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+
+website_route_rules = [{'from_route': '/gate_view/<path:app_path>', 'to_route': 'gate_view'},]

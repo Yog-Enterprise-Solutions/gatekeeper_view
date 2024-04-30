@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/assets/gatekeeper_view/gate_view/sw.js', { scope: '/assets/gatekeeper_view/gate_view/' })})}
